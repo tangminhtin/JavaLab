@@ -12,10 +12,6 @@ package j1.s.p0006;
  * @author tangminhtin
  */
 public class J1SP0006 {
-
-    /**
-     * @param args the command line arguments
-     */
      public static void main(String[] args) {
         System.out.println("The 45 sequence fibonacci");
         fibonnaciHelper(45, 1, 0);
@@ -28,5 +24,4 @@ public class J1SP0006 {
         System.out.print(higher + " ");
         return fibonnaciHelper(term - 1, higher, higher + lower);
     }
-    
 }

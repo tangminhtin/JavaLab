@@ -41,5 +41,4 @@ public class J1SP0004 {
         int foundIndex = searcher.binarySearch(array, search, 0, length - 1);
         System.out.println("\nFound " + search + " at index: " + foundIndex);
     }
-    
 }

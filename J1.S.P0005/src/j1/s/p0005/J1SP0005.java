@@ -27,13 +27,7 @@ public class J1SP0005 {
         HashMap<String, Integer> wordCount = counter.wordCount(words);
         System.out.println(wordCount);
 
-//        words.split(" ");
-
-
         HashMap<Character, Integer> characterCount = counter.characterCount(words);
         System.out.println(characterCount);
-        
-     
     }
-    
 }
