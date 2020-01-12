@@ -32,7 +32,7 @@ public class BinarySearch {
     }
 
     // Returns index of x if it is present in arr[low..r], else return -1 
-    int binarySearch(int low, int high, int value) {
+    public int binarySearch(int low, int high, int value) {
         if (high >= low) {
             int mid = low + (high - low) / 2;
 
