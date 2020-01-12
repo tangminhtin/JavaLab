@@ -1,54 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package j1.s.p0001;
 
-
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
  *
  * @author tangminhtin
  */
 public class Sort {
-    private int num;
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
-
-    public Sort(int num) {
-        this.num = num;
-    }
-    public int[] unSort(){
-        int[] list = new int[this.num];
-        Random rd = new Random();
-        for(int i=0;i<this.num;i++){
-            int min=1;
-            int max=this.num;
-            int value=rd.nextInt(max+1-min)+min;
-            list[i] = value;
-        }
-        return list;
+    
+    private ArrayList<Integer> arr;
+    
+    public Sort(ArrayList arr) {
+        this.arr = arr;
     }
     
+    private void swap(int i, int j) {
+        Integer tmp = arr.get(i);
+        arr.set(i, arr.get(j));
+        arr.set(j, tmp);
+    }
+
     // Buble sort
-    public int[] sorted(int[] arr){
-        for(int i=0;i<arr.length;i++){
-            for(int j=0;j<arr.length-i-1;j++){
-                if(arr[j]>arr[j+1]){
-                    int temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
+    public void sorted() {
+        for (int i = 0; i < arr.size(); i++) {
+            for (int j = 0; j < arr.size() - i - 1; j++) {
+                if (arr.get(j) > arr.get(j + 1)) {
+                    swap(j, j + 1);
                 }
             }
         }
-        return arr;
     }
 }

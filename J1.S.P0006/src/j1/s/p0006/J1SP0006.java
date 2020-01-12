@@ -24,4 +24,12 @@ public class J1SP0006 {
         System.out.print(higher + " ");
         return fibonnaciHelper(term - 1, higher, higher + lower);
     }
+    
+    public void TinIaRaCay() {
+        System.out.println("Ia gi ma nhieu vay cha!!!");
+        
+        System.out.println("Vo code chi ae coi");
+        
+        System.out.println("Con muon gi them thi keu Hao qua bus cu!!!");
+    }
 }

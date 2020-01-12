@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package j1.s.p0003;
 
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -13,30 +10,55 @@ import java.util.Scanner;
  */
 public class J1SP0003 {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        int i, j;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter number of array:");
-        int number = sc.nextInt();
-        Sort sort = new Sort(number);
-        
-        int[] unsort = sort.unSort();
-        System.out.print("Unsort array: [");
-        for(i=0;i<unsort.length-1;i++){
-            System.out.print(unsort[i]+", ");
-        }
-        System.out.print(unsort[i]+"]");
-        
-        int[] sorted = sort.sorted(unsort);
-        System.out.print("\nSorted array: [");
-        for(j=0;j<unsort.length-1;j++){
-            System.out.print(sorted[j]+", ");
-        }
-        System.out.print(sorted[j]+"]");
+    private ArrayList<Integer> arr;
+
+    public J1SP0003() {
+        this.arr = new ArrayList<Integer>();
     }
-    
+
+    public ArrayList<Integer> getA() {
+        return arr;
+    }
+
+    public void generateArray() {
+        Scanner scanner = new Scanner(System.in);
+        int n = 0;
+
+        while (true) {
+            try {
+                System.out.println("Enter number of array: ");
+                n = scanner.nextInt();
+                break;
+            } catch (Exception e) {
+                System.out.println("You must enter digit only!");
+                scanner.nextLine();
+            }
+        }
+
+        Random random = new Random();
+        for (int i = 0; i < n; i++) {
+            this.arr.add(random.nextInt() % 100);
+        }
+    }
+
+    public void display(String msg) {
+        System.out.print(msg);
+        System.out.print("[" + arr.get(0));
+        for (int i = 1; i < arr.size(); i++) {
+            System.out.print(", " + arr.get(i));
+        }
+        System.out.println("]");
+    }
+
+    public static void main(String[] args) {
+        J1SP0003 obj = new J1SP0003();
+
+        obj.generateArray();
+        obj.display("Array before sorted: ");
+
+        Sort sort = new Sort(obj.getA());
+        sort.sorted();
+
+        obj.display("Array after sorted: ");
+    }
 }

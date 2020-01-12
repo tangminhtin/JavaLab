@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package j1.s.p0004;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,31 +10,70 @@ import java.util.Scanner;
  */
 public class J1SP0004 {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    private ArrayList<Integer> arr;
+
+    public J1SP0004() {
+        this.arr = new ArrayList<Integer>();
+    }
+
+    public ArrayList<Integer> getA() {
+        return arr;
+    }
+
+    public int getValue(String msg) {
         Scanner scanner = new Scanner(System.in);
-        
-        System.out.println("Enter number of array:");
-        int length = scanner.nextInt();
-        scanner.nextLine();
-        
-        System.out.println("Enter search value:");
-        int search = scanner.nextInt();
-        
-        int[] array = new int[length];
-        for (int i = 0; i < length; i++) {
-            array[i] = new Random().nextInt(length);
+        int n = 0;
+
+        while (true) {
+            try {
+                System.out.println(msg);
+                n = scanner.nextInt();
+                break;
+            } catch (Exception e) {
+                System.out.println("You must enter digit only!");
+                scanner.nextLine();
+            }
         }
-        BinarySearch searcher = new BinarySearch();
-        searcher.bubbleSort(array);
+        return n;
+    }
+    
+    public void generateArray(String msg) {
+        Random random = new Random();
+        int n = getValue(msg);
         
-        System.out.print("Sorted array: ");
-        searcher.displayArray(array);
+        for (int i = 0; i < n; i++) {
+            this.arr.add(random.nextInt(11));
+        }
+    }
+
+    public void display(String msg) {
+        System.out.print(msg);
+        System.out.print("[" + arr.get(0));
+        for (int i = 1; i < arr.size(); i++) {
+            System.out.print(", " + arr.get(i));
+        }
+        System.out.println("]");
+    }
+    
+    public void result(int value, int index) {
+        if (index == -1) {
+            System.out.println("Value " + value + " doesn't exist in array");
+        } else {
+            System.out.println("Found " + value + " at index: " + index);
+        }
+    }
+
+    public static void main(String[] args) {
+        J1SP0004 obj = new J1SP0004();
+
+        obj.generateArray("Enter number of array: ");
+        int value = obj.getValue("Enter search value: ");
+                
+        BinarySearch binarySearch = new BinarySearch(obj.getA());
+        binarySearch.sorted();
+        obj.display("Sorted array: ");
         
-        int foundIndex = searcher.binarySearch(array, search, 0, length - 1);
-        System.out.println("\nFound " + search + " at index: " + foundIndex);
+        int index = binarySearch.binarySearch(0, obj.arr.size(), value);
+        obj.result(value, index);
     }
 }
