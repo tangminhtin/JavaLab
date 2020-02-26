@@ -42,11 +42,15 @@ public class Validation {
     public String checkPhone(String msg) {
         while (true) {
             String phone = this.checkEmpty(msg); // Check empty phone number
-            // Pattern validate for phone number
-            String phoneRegex = "[(]?[0-9]{3}[)]?[-. ]?[0-9]{3}[-. ]?[0-9]{4}"
-                    + "|[0-9]{3}[-][0-9]{3}[-][0-9]{4}[ a-z0-9]+";
 
-            if (phone.matches(phoneRegex)) {    // If phone is match with phoneRegex
+            // If phone is match with each pattern then return phone
+            if (phone.matches("\\d{10}")
+                    || phone.matches("\\d{3}\\-\\d{3}\\-\\d{4}")
+                    || phone.matches("\\d{3}\\-\\d{3}\\-\\d{4} (x)\\d{4}")
+                    || phone.matches("\\d{3}\\-\\d{3}\\-\\d{4} (ext)\\d{4}")
+                    || phone.matches("\\(\\d{3}\\)\\-\\d{3}\\-\\d{4}")
+                    || phone.matches("\\d{3}\\.\\d{3}\\.\\d{4}")
+                    || phone.matches("\\d{3} \\d{3} \\d{4}")) {
                 return phone;   // Then return phone
             } else {    // Otherwise print instruction of input phone number
                 System.out.println("Please input Phone flow");
