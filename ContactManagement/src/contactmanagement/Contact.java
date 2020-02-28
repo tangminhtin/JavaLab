@@ -12,16 +12,16 @@ package contactmanagement;
 public class Contact {
 
     private int id;             // Store id of contact
+    private static int autoId = 0;  // Id of contact will be automatically increase
     private String fullname;    // Store full name of contact 
     private String firstName;   // Store first name of contact
     private String lastName;    // Store last name of contact
-    private String group;       // Store group
-    private String address;     // Store address
-    private String phone;       // Store phone
-    private static int autoId = 0;  // Id of contact will be automatically increase
+    private String group;       // Store group of contact
+    private String address;     // Store address of contact
+    private String phone;       // Store phone of contact
 
     /**
-     * Create constructor for Contact class
+     * Constructor for Contact class
      *
      * @param fullname
      * @param firstName
@@ -31,13 +31,14 @@ public class Contact {
      * @param phone
      */
     public Contact(String fullname, String firstName, String lastName, String group, String address, String phone) {
-        this.id = ++autoId; // Id will increase by 1 for each time is call
         this.fullname = fullname;
         this.firstName = firstName;
         this.lastName = lastName;
         this.group = group;
         this.address = address;
         this.phone = phone;
+        this.id = ++autoId; // Increase id by 1 for each time is call
+
     }
 
     /**

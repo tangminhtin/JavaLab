@@ -13,41 +13,76 @@ import java.util.ArrayList;
  */
 public class ContactManagement {
 
-    private final ArrayList<Contact> contacts;  // Create array list to store contact
-    private final Validation validation;    // Create validation to check validate of input
+    private final ArrayList<Contact> contacts;  // Store contact
+    private final Validation validation;    // Object validate to check input
 
     /**
-     * Create constructor for ContactManagement
+     * Constructor for ContactManagement
      */
     public ContactManagement() {
-        contacts = new ArrayList<>();   // Create new array list for contacts
-        validation = new Validation();  // Create new validation
+        contacts = new ArrayList<>();   // Create array list for contacts
+        validation = new Validation();  // Create validation
     }
 
     /**
-     * Add new contact
+     * Show menu for user choice
+     *
+     * @return
+     */
+    public int showMenu() {
+        System.out.println("============ Contact program ============");
+        System.out.println("1. Add a Contact");
+        System.out.println("2. Dislay all Contact");
+        System.out.println("3. Delete a Contact");
+        System.out.println("4. Exit");
+        return validation.CheckInt("Your choice"); // Check and return choice
+    }
+
+    /**
+     * Add contact
      */
     public void addContact() {
         System.out.println("####### Add a Contact #######");
-        String fullname = validation.checkEmpty("Enter Name: ");    // Call method to check empty of name
-        String group = validation.checkEmpty("Enter Group: ");      // Call method to check empty of group
-        String address = validation.checkEmpty("Enter Address: ");  // Call method to check emtpy of address
-        String phone = validation.checkPhone("Enter Phone: ");      // Call method to check validate of phone
+        String fullname = validation.checkEmpty("Enter name: ");    // Check empty of name
+        String group = validation.checkEmpty("Enter group: ");      // Check empty of group
+        String address = validation.checkEmpty("Enter address: ");  // Check emtpy of address
+        String phone = validation.checkPhone("Enter phone: ");      // Check validate of phone
 
-        String[] arrName = fullname.split(" "); // Split full name to array
-        String firstName = "";  // Store first name
+        String[] arrName = fullname.split(" "); // Split fullname to array. Ex: "Tang Minh Tin" -> ["Tang", "Minh", "Tin"]
         String lastName = "";   // Store last name
 
         for (int i = 0; i < arrName.length; i++) {
-            if (i == 0) {   // If i equal 0
-                firstName = arrName[i]; // Then store first name
-            } else {
-                lastName += arrName[i] + " ";   // Otherwise store last name
+            if (i != 0) { // If i not equal to 0 (not at the first element in array)
+                lastName += arrName[i] + " ";   // Otherwise concate to last name
             }
         }
-        // Add new contact into array list
-        contacts.add(new Contact(fullname, firstName, lastName, group, address, phone));
-        System.out.println("Successful");   // Print out message
+
+        // Add contact into array list
+        contacts.add(new Contact(fullname, arrName[0], lastName, group, address, phone));
+        System.out.println("Successful");   // Show message
+    }
+
+    /**
+     * Remove contact
+     */
+    public void removeContact() {
+        System.out.println("####### Delete a Contact #######");
+        int id = validation.CheckInt("Enter ID");  // Check input of id
+
+        boolean isDeleted = false;  // Status of delete
+
+        for (int i = 0; i < this.contacts.size(); i++) {
+            if (contacts.get(i).getId() == id) {    // If id contact equal id
+                contacts.remove(i);     // Then remove it
+                isDeleted = true;       // Change status of isDeleted
+                System.out.println("Successful");   // Show message and exit
+                return;
+            }
+        }
+
+        if (!isDeleted) {    // If isDeleted is false, then show message
+            System.out.println("ID doesn't exist in contact!");
+        }
     }
 
     /**
@@ -59,7 +94,7 @@ public class ContactManagement {
         System.out.println("| ID    | Full Name            | First Name      | Last Name       | Group           | Address         |Phone            |");
         System.out.println("+-------+----------------------+-----------------+-----------------+-----------------+-----------------+-----------------+");
         for (Contact contact : contacts) {
-            // Print out all information of contact
+            // Show all information of contact
             System.out.printf("| %-5s | %-20s | %-15s | %-15s | %-15s | %-15s | %-15s | \n", contact.getId(),
                     contact.getFullname(), contact.getFirstName(), contact.getLastName(),
                     contact.getGroup(), contact.getAddress(), contact.getPhone());
@@ -69,42 +104,7 @@ public class ContactManagement {
     }
 
     /**
-     * Delete contact
-     */
-    public void deleteContact() {
-        System.out.println("####### Delete a Contact #######");
-        int id = validation.checkValidate("Enter ID");  // Call method to check validate of id
-        boolean isRemoved = false;  // Store status of remove
-        for (int i = 0; i < this.contacts.size(); i++) {
-            if (contacts.get(i).getId() == id) {    // If id equal id in contact
-                contacts.remove(i);     // Then remove it
-                isRemoved = true;       // Set status of remove
-            }
-        }
-
-        if (isRemoved) {    // If isRemoved is true
-            System.out.println("Successful");   // Then print out message
-        } else {    // Otherwise print out error
-            System.out.println("Your ID doesn't exist!");
-        }
-    }
-
-    /**
-     * Method will be show menu for user choice
-     *
-     * @return
-     */
-    public int showMenu() {
-        System.out.println("============ Contact program ============");
-        System.out.println("1. Add a Contact");
-        System.out.println("2. Dislay all Contact");
-        System.out.println("3. Delete a Contact");
-        System.out.println("4. Exit");
-        return validation.checkValidate("Your choice"); // Check and return choice
-    }
-
-    /**
-     * First program will run here
+     * Main program will run here
      *
      * @param args the command line arguments
      */
@@ -113,22 +113,25 @@ public class ContactManagement {
         ContactManagement contactManagement = new ContactManagement();
 
         while (true) {
-            int choice = contactManagement.showMenu();  // Call method to show menu and return choice
+            int choice = contactManagement.showMenu();  // Show menu and return choice
             switch (choice) {
                 case 1:
-                    contactManagement.addContact();     // Call method to add contact
+                    // Add contact
+                    contactManagement.addContact();
                     break;
                 case 2:
-                    contactManagement.displayContact(); // Call method to display all contact
+                    // Display all contact
+                    contactManagement.displayContact();
                     break;
                 case 3:
-                    contactManagement.deleteContact();  // Call method to delete contact
+                    // Remove contact
+                    contactManagement.removeContact();
                     break;
                 case 4:
                     System.out.println("Thank for using my program!");
                     System.exit(0); // Exit program
                 default: // Print error
-                    System.out.println("ERROR: You must choice from 1 to 4!");
+                    System.out.println("ERROR: Please choice from 1 to 4!");
             }
         }
     }
